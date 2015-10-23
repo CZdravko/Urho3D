@@ -59,6 +59,9 @@ void Sample::Setup()
     engineParameters_["FullScreen"]  = false;
     engineParameters_["Headless"]    = false;
     engineParameters_["Sound"]       = false;
+    
+    engineParameters_["WindowWidth"] = 800;
+    engineParameters_["WindowHeight"] = 600;
 }
 
 void Sample::Start()

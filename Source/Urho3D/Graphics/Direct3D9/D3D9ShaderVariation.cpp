@@ -95,9 +95,18 @@ bool ShaderVariation::Create()
     }
     else
     {
-        if (!device || FAILED(device->CreatePixelShader(
-            (const DWORD*)&byteCode[0],
-            (IDirect3DPixelShader9**)&object_)))
+    	HRESULT ps_result = device->CreatePixelShader(
+                (const DWORD*)&byteCode[0],
+                (IDirect3DPixelShader9**)&object_);
+
+    	if(ps_result == D3DERR_INVALIDCALL)
+    		LOGINFO("D3DERR_INVALIDCALL");
+    	else if(ps_result == D3DERR_OUTOFVIDEOMEMORY)
+    	    		LOGINFO("D3DERR_OUTOFVIDEOMEMORY");
+    	else if(ps_result ==  E_OUTOFMEMORY)
+    	    		LOGINFO(" E_OUTOFMEMORY");
+
+        if (!device || FAILED(ps_result))
             compilerOutput_ = "Could not create pixel shader";
     }
 
@@ -232,13 +241,13 @@ bool ShaderVariation::Compile(PODVector<unsigned>& byteCode)
     {
         entryPoint = "VS";
         defines.Push("COMPILEVS");
-        profile = "vs_3_0";
+        profile = "vs_2_0";
     }
     else
     {
         entryPoint = "PS";
         defines.Push("COMPILEPS");
-        profile = "ps_3_0";
+        profile = "ps_2_0";
         flags |= D3DCOMPILE_PREFER_FLOW_CONTROL;
     }
 
@@ -282,6 +291,8 @@ bool ShaderVariation::Compile(PODVector<unsigned>& byteCode)
 
     LPD3DBLOB shaderCode = 0;
     LPD3DBLOB errorMsgs = 0;
+
+    LOGINFOF("shader source: %s", sourceCode.CString());
 
     if (FAILED(D3DCompile(sourceCode.CString(), sourceCode.Length(), owner_->GetName().CString(), &macros.Front(), 0,
         entryPoint, profile, flags, 0, &shaderCode, &errorMsgs)))

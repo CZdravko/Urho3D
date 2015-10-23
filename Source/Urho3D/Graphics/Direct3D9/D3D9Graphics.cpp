@@ -1000,7 +1000,7 @@ bool Graphics::SetVertexBuffers(const PODVector<VertexBuffer*>& buffers, const P
         if (i < buffers.Size())
         {
             buffer = buffers[i];
-            if (buffer && buffer->GetElementMask() & MASK_INSTANCEMATRIX1)
+            if (buffer && (buffer->GetElementMask() & MASK_INSTANCEMATRIX1))
                 offset = instanceOffset * buffer->GetVertexSize();
         }
 
@@ -2446,11 +2446,11 @@ bool Graphics::CreateInterface()
         return false;
     }
 
-    if (impl_->deviceCaps_.PixelShaderVersion < D3DPS_VERSION(3, 0))
-    {
-        LOGERROR("Shader model 3.0 display adapter is required");
-        return false;
-    }
+//    if (impl_->deviceCaps_.PixelShaderVersion < D3DPS_VERSION(3, 0))
+//    {
+//        LOGERROR("Shader model 3.0 display adapter is required");
+//        return false;
+//    }
 
     return true;
 }

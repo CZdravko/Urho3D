@@ -61,7 +61,13 @@ void Urho3DPlayer::Setup()
         ParseArguments(commandLine, false);
         // Reparse engine startup parameters now
         engineParameters_ = Engine::ParseParameters(GetArguments());
+
     }
+
+    engineParameters_["FullScreen"] = false;
+
+	engineParameters_["WindowWidth"] = 800;
+	engineParameters_["WindowHeight"] = 600;
 
     // Check for script file name
     const Vector<String>& arguments = GetArguments();
@@ -126,6 +132,8 @@ void Urho3DPlayer::Start()
     String extension = GetExtension(scriptFileName_);
     if (extension != ".lua" && extension != ".luc")
     {
+
+    	LOGINFOF("window resolutin is: %d x %d", engineParameters_["WindowWidth"].GetUInt(), engineParameters_["WindowHeight"].GetUInt());
 #ifdef URHO3D_ANGELSCRIPT
         // Instantiate and register the AngelScript subsystem
         context_->RegisterSubsystem(new Script(context_));

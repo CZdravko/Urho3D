@@ -22,10 +22,10 @@
 
 #pragma once
 
-#if defined(URHO3D_OPENGL)
-#include "OpenGL/OGLGraphicsImpl.h"
-#elif defined(URHO3D_D3D11)
-#include "Direct3D11/D3D11GraphicsImpl.h"
-#else
+//#if defined(URHO3D_OPENGL)
+//#include "OpenGL/OGLGraphicsImpl.h"
+//#elif defined(URHO3D_D3D11)
+//#include "Direct3D11/D3D11GraphicsImpl.h"
+//#else
 #include "Direct3D9/D3D9GraphicsImpl.h"
-#endif
+//#endif

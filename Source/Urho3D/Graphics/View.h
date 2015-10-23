@@ -178,7 +178,7 @@ public:
     /// Set G-buffer offset and inverse size shader parameters. Called by Batch and internally by View.
     void SetGBufferShaderParameters(const IntVector2& texSize, const IntRect& viewRect);
 
-private:
+protected:
     /// Query the octree for drawable objects.
     void GetDrawables();
     /// Construct batches from the drawable objects.
